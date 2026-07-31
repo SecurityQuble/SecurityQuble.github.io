@@ -8,7 +8,6 @@ export default function SiteHeader({ active }: SiteHeaderProps) {
   return (
     <header className="site-header">
       <Link className="brand" href="/" aria-label="Quble 홈">
-        <img className="brand-avatar" src="/quble-logo.png" alt="Quble 호랑이 로고" />
         <strong>Quble</strong>
       </Link>
 

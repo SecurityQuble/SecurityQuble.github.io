@@ -48,13 +48,6 @@ a {
   gap: 11px;
 }
 
-.brand-avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .brand strong {
   color: var(--text-strong);
   font-size: 17px;
