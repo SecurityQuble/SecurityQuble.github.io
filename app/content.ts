@@ -16,8 +16,8 @@ export const members: Member[] = [
   { name: "rauzn", role: "pwn", handle: "r4uzn" },
   { name: "4hnov", role: "pwn", handle: "4hnov" },
   { name: "0w0", role: "rev", handle: "rowocus" },
-  { name: "이성준", role: "Hardware", handle: "Lee-seongjoon" },
-  { name: "hw4yeon", role: "PWN, AI", handle: "hw4yeon" },
+  { name: "이성준", role: "hardware", handle: "Lee-seongjoon" },
+  { name: "hw4yeon", role: "pwn, AI", handle: "hw4yeon" },
   { name: "novice-22", role: "web", handle: "novice-22" },
 ];
 
