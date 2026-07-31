@@ -1,4 +1,3 @@
 # Quble Research Blog
 
-quble assemble
-
+i like apple
