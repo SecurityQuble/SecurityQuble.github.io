@@ -1,5 +1,4 @@
 import Link from "next/link";
-import MemberMarquee from "./components/MemberMarquee";
 import SiteHeader from "./components/SiteHeader";
 import { members, posts } from "./content";
 
@@ -8,11 +7,7 @@ export default function Home() {
     <main className="site-shell" id="top">
       <SiteHeader active="posts" />
 
-      <section className="section posts-section" aria-labelledby="posts-title">
-        <div className="section-heading">
-          <h1 id="posts-title">Posts</h1>
-        </div>
-
+      <section className="section posts-section" aria-label="Posts">
         {posts.map((post) => {
           const author = members.find((member) => member.handle === post.author);
 
@@ -40,8 +35,6 @@ export default function Home() {
           );
         })}
       </section>
-
-      <MemberMarquee />
     </main>
   );
 }

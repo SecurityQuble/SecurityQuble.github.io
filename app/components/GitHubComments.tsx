@@ -4,8 +4,11 @@ import { useEffect, useRef } from "react";
 
 export default function GitHubComments() {
   const commentsRef = useRef<HTMLDivElement>(null);
+  const isLocalPreview = process.env.NODE_ENV === "development";
 
   useEffect(() => {
+    if (isLocalPreview) return;
+
     const container = commentsRef.current;
     if (!container) return;
 
@@ -21,7 +24,13 @@ export default function GitHubComments() {
     container.appendChild(script);
 
     return () => container.replaceChildren();
-  }, []);
+  }, [isLocalPreview]);
 
-  return <div className="github-comments" ref={commentsRef} />;
+  return (
+    <div className="github-comments" ref={commentsRef}>
+      {isLocalPreview ? (
+        <p className="comments-preview-note">댓글은 공개 사이트에서 정상적으로 표시됩니다.</p>
+      ) : null}
+    </div>
+  );
 }

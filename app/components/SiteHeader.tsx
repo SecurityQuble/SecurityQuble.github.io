@@ -7,23 +7,28 @@ type SiteHeaderProps = {
 export default function SiteHeader({ active }: SiteHeaderProps) {
   return (
     <header className="site-header">
-      <Link className="brand" href="/" aria-label="Quble 홈">
-        <strong>Quble</strong>
-      </Link>
+      <div className="header-wordmark">
+        <Link className="brand" href="/" aria-label="Quble 홈">
+          <strong>Quble</strong>
+        </Link>
+      </div>
 
-      <div className="header-actions">
-        <nav className="site-nav" aria-label="주요 메뉴">
-          <Link className={active === "posts" ? "active" : ""} href="/">Posts</Link>
-          <Link className={active === "members" ? "active" : ""} href="/members">Members</Link>
-        </nav>
-        <a
-          className="header-link"
-          href="https://github.com/SecurityQuble"
-          target="_blank"
-          rel="noreferrer"
-        >
-          GitHub <span aria-hidden="true">↗</span>
-        </a>
+      <div className="header-lower">
+        <span className="header-kicker">security research team</span>
+        <div className="header-actions">
+          <nav className="site-nav" aria-label="주요 메뉴">
+            <Link className={active === "posts" ? "active" : ""} href="/">Posts</Link>
+            <Link className={active === "members" ? "active" : ""} href="/members">Members</Link>
+          </nav>
+          <a
+            className="header-link"
+            href="https://github.com/SecurityQuble"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
     </header>
   );
