@@ -18,7 +18,6 @@ function MemberCard({ member, duplicate = false }: { member: Member; duplicate?:
       <div className="member-copy">
         <div className="member-name-row">
           <h2>{member.name}</h2>
-          {member.leader ? <span className="leader-badge">leader</span> : null}
         </div>
         <p>{member.role}</p>
         <span className="member-handle">@{member.handle}</span>

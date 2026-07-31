@@ -37,7 +37,6 @@ export default function MembersPage() {
                 />
                 <div className="member-list-name">
                   <strong>{member.name}</strong>
-                  {member.leader ? <small>leader</small> : null}
                   <span>{member.role}</span>
                 </div>
                 <span className="member-list-handle">@{member.handle}</span>

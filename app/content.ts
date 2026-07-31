@@ -2,7 +2,6 @@ export type Member = {
   name: string;
   role: string;
   handle: string;
-  leader?: boolean;
 };
 
 export type BlogPost = {
@@ -14,7 +13,7 @@ export type BlogPost = {
 };
 
 export const members: Member[] = [
-  { name: "rauzn", role: "pwn", handle: "r4uzn", leader: true },
+  { name: "rauzn", role: "pwn", handle: "r4uzn" },
   { name: "4hnov", role: "pwn", handle: "4hnov" },
   { name: "0w0", role: "rev", handle: "rowocus" },
   { name: "이성준", role: "Hardware", handle: "Lee-seongjoon" },

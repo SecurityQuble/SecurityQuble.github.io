@@ -46,7 +46,6 @@ export default async function MemberPostsPage({
           <div>
             <div className="member-profile-name">
               <h1>{member.name}</h1>
-              {member.leader ? <small>leader</small> : null}
             </div>
             <p>{member.role}</p>
             <a
