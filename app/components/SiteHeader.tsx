@@ -14,7 +14,7 @@ export default function SiteHeader({ active }: SiteHeaderProps) {
       </div>
 
       <div className="header-lower">
-        <span className="header-kicker">security research team</span>
+        <span className="header-kicker">Research Team</span>
         <div className="header-actions">
           <nav className="site-nav" aria-label="주요 메뉴">
             <Link className={active === "posts" ? "active" : ""} href="/">Posts</Link>

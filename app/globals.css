@@ -69,6 +69,12 @@ a {
   line-height: .82;
   letter-spacing: -.07em;
   -webkit-text-stroke: 1.5px var(--text-strong);
+  transition: color 160ms ease;
+}
+
+.brand:hover strong,
+.brand:focus-visible strong {
+  color: var(--text-strong);
 }
 
 .header-lower {
@@ -86,13 +92,18 @@ a {
 }
 
 .header-link {
+  background-image: linear-gradient(var(--text-strong), var(--text-strong));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0 1px;
   color: var(--text-muted);
   font-size: 12px;
-  transition: color 150ms ease;
+  transition: color 150ms ease, background-size 220ms ease;
 }
 
 .header-link:hover,
 .header-link:focus-visible {
+  background-size: 100% 1px;
   color: var(--accent);
 }
 
@@ -111,12 +122,18 @@ a {
 .site-nav a {
   position: relative;
   padding: 0;
+  background-image: linear-gradient(var(--text-strong), var(--text-strong));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0 1px;
   color: var(--text-muted);
   font-size: 12px;
+  transition: color 150ms ease, background-size 220ms ease;
 }
 
 .site-nav a:hover,
 .site-nav a:focus-visible {
+  background-size: 100% 1px;
   color: var(--text-strong);
 }
 
@@ -244,13 +261,22 @@ a {
   font-size: 11px;
 }
 
-.post-row h2,
+.post-row h2 {
+  width: fit-content;
+  background-image: linear-gradient(var(--text-strong), var(--text-strong));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0 1px;
+  transition: color 150ms ease, background-size 260ms ease;
+}
+
 .post-row time {
   transition: color 150ms ease;
 }
 
 .post-row:hover h2,
 .post-row:focus-visible h2 {
+  background-size: 100% 1px;
   color: var(--accent);
 }
 
