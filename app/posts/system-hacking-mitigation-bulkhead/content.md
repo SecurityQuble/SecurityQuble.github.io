@@ -24,7 +24,7 @@
 
 BULKHEAD는 2025년 NDSS에 발표된 연구로, 정식 제목은 Secure, Scalable, and Efficient Kernel Compartmentalization with PKS 입니다.
 
-저자들은 상용 OS 커널(리눅스처럼 성능과 호환을 위해 모놀리식 구조를 유지하는 커널)에서는 어느 한 컴포넌트의 취약점만으로도 시스템 전체를 장악할 수 있다는 점을 출발점으로 삼았습니다.
+저자들은 상용 OS 커널(리눅스처럼 성능과 호환을 위해 모놀리식 구조를 유지하는 커널)에서는 어느 한 컴포넌트의 취약점만으로도 시스템 전체를 장악할 수 있다는 점에서 연구를 시작했다고 합니다.
 
 ![BULKHEAD 문제 인식: 모놀리식 커널의 구조적 위험](/posts/system-hacking-mitigation-bulkhead/image1.png)
 

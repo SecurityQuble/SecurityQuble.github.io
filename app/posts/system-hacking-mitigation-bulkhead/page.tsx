@@ -91,8 +91,8 @@ export default function SystemHackingMitigationBulkheadPost() {
           </p>
           <p>
             저자들은 상용 OS 커널(리눅스처럼 성능과 호환을 위해 모놀리식 구조를 유지하는
-            커널)에서는 어느 한 컴포넌트의 취약점만으로도 시스템 전체를 장악할 수 있다는 점을
-            출발점으로 삼았습니다.
+            커널)에서는 어느 한 컴포넌트의 취약점만으로도 시스템 전체를 장악할 수 있다는 점에서
+            연구를 시작했다고 합니다.
           </p>
           <figure className="article-figure article-figure--sm">
             <img src={asset("image1.png")} alt="BULKHEAD 문제 인식: 모놀리식 커널의 구조적 위험" />
