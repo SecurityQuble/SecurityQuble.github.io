@@ -1,0 +1,91 @@
+해킹 기법과 mitigation은 서로 뚫고 막으면서 계속 변화하고 성장해 왔습니다.
+
+시스템 해킹에서 대표적인 예로, 스택 버퍼 오버플로가 널리 쓰이자 이를 막기 위해 카나리같은 보호 기법이 도입되었습니다.
+
+카나리는 반환 주소가 덮이기 전에 변조를 탐지하는 방식입니다. 그렇기 때문에 이 카나리 값을 알아내고 똑같이 덮어낸 뒤 그 뒤의 주소를 변조하면 우회가 가능했습니다. 그래서 해커들은 이 카나리 값을 알아내기 위한 memory/info leak 같은 기법을 사용했습니다.
+
+또 다른 예시로, NX/DEP로 인해 실행 가능한 스택에 셸코드를 올리는 길이 막히자 ret2libc와 ROP처럼 이미 있는 코드를 이어 붙이는 기법이 부상했고, 주소 공간 배치를 숨기는 ASLR이 보편화되면서 공격은 다시 주소와 레이아웃을 알아내기 위한 정보 유출을 거의 필수로 체이닝 해서 사용하게 되었습니다.
+
+이렇듯 취약점과 mitigation은 한 쪽이 막히면 다른 쪽이 우회 기법을 찾고, 그로인해 또 새로운 기법과 mitigation이 생기는 식으로 이어져 왔습니다.
+
+그리고 유저랜드 한 바이너리 뿐만 아니라 최신 환경에서는 CFI, shadow stack, ASLR 같은 보호기법이 겹겹이 중복되어 적용되면서 LPE 등의 크리티컬한 취약점을 제보하기 위해서는 더 긴 체이닝과 더 높은 권한 경계(특히 커널, 드라이버, 모듈 쪽)으로 보게되는 경우가 많아졌습니다.
+
+여기서 제가 관심을 가지고 본 것은, 개별 익스플로잇 기법을 막는 mitigation은 계속 나오지만 모놀리식 커널처럼 한 컴포넌트의 메모리 버그가 곧 시스템 전체 장악으로 이어질 수 있는 구조에서는 뚫린 뒤의 피해가 어디까지 퍼지는지가 중요하다는 것입니다.
+
+최근 연구나 blackhat 등 컨퍼런스에서의 발표를 보면 카나리나 NX 같은 개별 보호 기법들을 넘어 커널을 컴포넌트로 나누거나 제어 흐름이나 데이터 영역을 하드웨어로 강제하는 식의 mitigation들이 나오고 있습니다.
+
+그래서 Quble 블로그의 첫 글이자 저의 첫 글인 이 포스트에서는, 앞으로의 mitigation 발전 방향성을 조금이나마 살펴볼 수 있는 연구로 BULKHEAD(NDSS 2025, PKS 기반 커널 컴포넌트화)를 살펴보려 합니다.
+
+---
+
+### What Is BULKHEAD?
+
+BULKHEAD는 2025년 NDSS에 발표된 연구로, 정식 제목은 Secure, Scalable, and Efficient Kernel Compartmentalization with PKS 입니다.
+
+저자들은 상용 OS 커널(리눅스처럼 성능과 호환을 위해 모놀리식 구조를 유지하는 커널)에서는 어느 한 컴포넌트의 취약점만으로도 시스템 전체를 장악할 수 있다는 점을 출발점으로 삼았습니다.
+
+![BULKHEAD 문제 인식: 모놀리식 커널의 구조적 위험](/posts/system-hacking-mitigation-bulkhead/image1.png)
+
+드라이버나 로드 가능 커널 모듈(LKM)처럼 공격면이 넓은 영역이 한 번 뚫리면, 그 권한이 커널 전체로 이어지는 구조적인 문제가 남아 있다는 것입니다.
+
+제가 이해한(with GPT, Grok - Thank you) BULKHEAD는 익스플로잇 기법 하나를 더 막자는 것이 아니라 커널 내부를 서로 신뢰하지 않는 컴포넌트로 나누자는 것입니다.
+
+BULKHEAD는 인텔 PKS를 이용해 커널을 컴포넌트로 나눕니다.
+
+![Intel PKS 보호 키 개념](/posts/system-hacking-mitigation-bulkhead/image2.png)
+
+PKS는 위 이미지처럼 커널(슈퍼바이저) 모드 페이지에 보호 키를 붙이고, 스레드 단위 레지스터로 어떤 키 영역에 읽고 쓸 수 있는지를 빠르게 전환할 수 있게 해 주는 하드웨어 기능입니다.
+
+![BULKHEAD 아키텍처 개요](/posts/system-hacking-mitigation-bulkhead/image3.png)
+
+BULKHEAD는 이 기능을 이용해 코어 커널, 모니터, 개별 LKM 등의 코드·데이터를 서로 다른 키 영역으로 태깅하고, 컴포넌트마다 필요한 자원에만 접근하도록 제한합니다.
+
+기존 커널 격리 연구들은 보통 코어 커널은 믿고, 모듈 쪽만 제한하는 단방향 격리가 많았습니다.(ex: KSplit, LVD, LXDs, HAKC 등)
+
+![기존 커널 격리 연구와 BULKHEAD 비교](/posts/system-hacking-mitigation-bulkhead/image4.png)
+
+이렇게 하면 모듈이 코어의 중요한 자원을 마음대로 못 건드리게 할 수는 있지만, 반대로 코어(또는 신뢰된 쪽)는 여전히 다른 컴포넌트에 넓게 접근할 수 있는 경우가 많습니다. 그 상태에서는 이미 신뢰가 있는 쪽이 악의적인 입력에 속아 대신 위험한 일을 해 주는 confused deputy 같은 문제가 남기 쉽습니다.
+
+BULKHEAD는 이 부분을 중요하게 보고, 코어를 포함한 컴포넌트들이 서로의 메모리를 마음대로 건드리지 못하는 양방향 격리를 제안했습니다.
+
+그러니까 모듈만을 쉽게 신뢰하지 않던 기존 방식에서 커널 안에서도 서로 완전히 믿지 않도록 제안하는 것입니다.
+
+BULKHEAD는 먼저 코어 커널, 모니터, 각 LKM의 코드·데이터 페이지에 서로 다른 PKS 보호 키를 붙입니다. 그리고 실행 중에는 지금 어느 컴포넌트로 동작 중인지에 맞춰 권한 레지스터를 설정해서, 자기 키 영역만 읽고 쓰게 하고 다른 컴포넌트 메모리는 접근을 막습니다.
+
+여기서 중요한 점은 코어로 실행 중일 때도 전부 허용하는 게 아니라, 다른 컴포넌트 영역을 기본으로 못 건드리게 만드는 쪽에 가깝다는 것입니다. 다시 말하면 모듈만 가두는 게 아니라, 현재 컴포넌트 기준으로 남의 메모리를 막는 방식이 양방향 격리의 모습입니다.
+
+다만 컴포넌트끼리 전혀 안 만나면 커널이 동작할 수 없으니, 꼭 필요할 때만 다른 컴포넌트로 넘어가게 해야 합니다.
+
+컴포넌트 사이의 전환이 아무 코드에서나 일어나게 두지는 않습니다. 논문에서는 모니터가 관리하는 경로를 통해서만 컴포넌트를 넘나들도록 설계하고, 전환 때 출발 컴포넌트와 도착 컴포넌트를 검증해서 인터페이스가 남용되는 상황을 줄이려 합니다. 모니터 자체는 하이퍼바이저를 하나 더 올리는 방식이라기보다, 커널 안에 두는 가벼운 구성 요소로 잡혀 있습니다. 페이지 테이블이나 컴포넌트 전환에 필요한 정보처럼 격리의 뼈대가 되는 부분은 모니터 쪽이 지키고, 일반 컴포넌트가 그걸 함부로 바꾸지 못하게 하는 그림입니다.
+
+다만 컴포넌트를 많이, 잘게 나누려다 보면 하드웨어 쪽에서 제약 사항이 생깁니다. PKS가 동시에 다루기 좋은 키 개수에는 한계가 있기 때문입니다. 리눅스 모듈 수가 수백~수천 단위로 많을 수 있다는 점을 생각하면, 키 16개로는 컴포넌트를 너무 굵게 잡아야 할 수도 있습니다.
+
+그래서 논문에서는 키만으로 모든 모듈을 나누지 않고, PKS로 한 번 나누고 자주 엮이는 모듈 그룹은 주소 공간을 나눠 키를 재사용하는 2단계 구조로 더 많은 컴포넌트를 지원하려 합니다.
+
+정리하면, BULKHEAD는 모놀리식 커널에서 한 모듈이 뚫려도 전체가 바로 넘어가지 않게 구조를 나눌 수 있는가를 PKS로 실험해 본 연구해보고 제안해 본 mitigation 연구라고 생각하시면 될 것 같습니다.
+
+최신 mitigation들이 어떤 방향으로 발전되고 연구되고 있는지에 대해 적어보고 싶어서 찾아서 가져온 논문인데, 내용이 너무 딥해질 것 같아 오버헤드 등 실제 성능에 관한 실험 결과는 넣지 않았습니다. 관심이 있으시다면 직접 논문을 읽어보시는 것도 추천드립니다!
+
+어떤 시스템이든 취약점이 없을 확률이 제로에 가깝기 때문에, 시스템이 뚫릴 것을 전제로 어디까지 믿고, 어디부터는 믿지 않을지를 계속해서 그리는 일이 중요하다고 생각되는 것 같습니다.
+
+최근에 AI로 인해 다수의 취약점들이 다양한 체이닝 기법으로 제보되고 있는데, 그런 부분들을 쫓아가면서 최신 mitigation들은 어떤 게 연구되고 있는지 팔로우업해보는 것도 재밌는 공부가 될 것 같습니다. 이상 마치겠습니다. 읽어주셔서 감사합니다!
+
+---
+
+## References
+
+1. Yinggang Guo, Zicheng Wang, Weiheng Bai, Qingkai Zeng, Kangjie Lu.
+BULKHEAD: Secure, Scalable, and Efficient Kernel Compartmentalization with PKS.
+NDSS 2025.
+https://www.ndss-symposium.org/wp-content/uploads/2025-s328-paper.pdf
+(arXiv: https://arxiv.org/abs/2409.09606)
+Code: https://github.com/gyg128/BULKHEAD
+Talk: https://www.youtube.com/watch?v=q7M12aeeuMo
+2. Yongzhe Huang et al. KSplit: Automating Device Driver Isolation. OSDI 2022.
+https://www.usenix.org/system/files/osdi22-huang-yongzhe.pdf
+3. Vikram Narayanan et al. Lightweight Kernel Isolation with Virtualization and VM Functions. VEE 2020.
+https://www.cs.ucr.edu/~trentj/papers/vee20.pdf
+4. Vikram Narayanan et al. LXDs: Towards Isolation of Kernel Subsystems. ATC 2019.
+https://www.usenix.org/system/files/atc19-narayanan.pdf
+5. Derrick McKee et al. Preventing Kernel Hacks with HAKC. NDSS 2022.
+https://www.ndss-symposium.org/wp-content/uploads/2022-26-paper.pdf
