@@ -155,7 +155,7 @@ export default function SystemHackingMitigationBulkheadPost() {
             않도록 제안하는 것입니다.
           </p>
           <p>
-            BULKHEAD는 먼저 코어 커널, 모니터, 각 LKM의 코드·데이터 페이지에 서로 다른 PKS 보호
+            방식은 먼저, 코어 커널, 모니터, 각 LKM의 코드·데이터 페이지에 서로 다른 PKS 보호
             키를 붙입니다. 그리고 실행 중에는 지금 어느 컴포넌트로 동작 중인지에 맞춰 권한
             레지스터를 설정해서, 자기 키 영역만 읽고 쓰게 하고 다른 컴포넌트 메모리는 접근을
             막습니다.
