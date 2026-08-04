@@ -30,11 +30,4 @@ export const posts: BlogPost[] = [
     date: "2026-08-04",
     author: "r4uzn",
   },
-  {
-    slug: "test",
-    title: "test",
-    content: "test",
-    date: "2026-07-31",
-    author: "r4uzn",
-  },
 ];
