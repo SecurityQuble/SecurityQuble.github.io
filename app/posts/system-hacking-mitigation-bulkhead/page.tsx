@@ -215,29 +215,6 @@ export default function SystemHackingMitigationBulkheadPost() {
               {" · "}
               <a href="https://www.youtube.com/watch?v=q7M12aeeuMo">Talk</a>
             </li>
-            <li>
-              Yongzhe Huang et al. KSplit: Automating Device Driver Isolation. OSDI 2022.
-              <br />
-              <a href="https://www.usenix.org/system/files/osdi22-huang-yongzhe.pdf">Paper</a>
-            </li>
-            <li>
-              Vikram Narayanan et al. Lightweight Kernel Isolation with Virtualization and VM
-              Functions. VEE 2020.
-              <br />
-              <a href="https://www.cs.ucr.edu/~trentj/papers/vee20.pdf">Paper</a>
-            </li>
-            <li>
-              Vikram Narayanan et al. LXDs: Towards Isolation of Kernel Subsystems. ATC 2019.
-              <br />
-              <a href="https://www.usenix.org/system/files/atc19-narayanan.pdf">Paper</a>
-            </li>
-            <li>
-              Derrick McKee et al. Preventing Kernel Hacks with HAKC. NDSS 2022.
-              <br />
-              <a href="https://www.ndss-symposium.org/wp-content/uploads/2022-26-paper.pdf">
-                Paper
-              </a>
-            </li>
           </ol>
         </div>
       </article>

@@ -81,11 +81,3 @@ https://www.ndss-symposium.org/wp-content/uploads/2025-s328-paper.pdf
 (arXiv: https://arxiv.org/abs/2409.09606)
 Code: https://github.com/gyg128/BULKHEAD
 Talk: https://www.youtube.com/watch?v=q7M12aeeuMo
-2. Yongzhe Huang et al. KSplit: Automating Device Driver Isolation. OSDI 2022.
-https://www.usenix.org/system/files/osdi22-huang-yongzhe.pdf
-3. Vikram Narayanan et al. Lightweight Kernel Isolation with Virtualization and VM Functions. VEE 2020.
-https://www.cs.ucr.edu/~trentj/papers/vee20.pdf
-4. Vikram Narayanan et al. LXDs: Towards Isolation of Kernel Subsystems. ATC 2019.
-https://www.usenix.org/system/files/atc19-narayanan.pdf
-5. Derrick McKee et al. Preventing Kernel Hacks with HAKC. NDSS 2022.
-https://www.ndss-symposium.org/wp-content/uploads/2022-26-paper.pdf
