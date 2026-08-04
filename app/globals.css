@@ -510,6 +510,16 @@ a {
   background: #fafafa;
 }
 
+.article-figure--sm {
+  display: flex;
+  justify-content: center;
+}
+
+.article-figure--sm img {
+  width: auto;
+  max-width: min(640px, 78%);
+}
+
 .article-refs {
   margin: 0;
   padding-left: 1.25em;

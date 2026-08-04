@@ -94,7 +94,7 @@ export default function SystemHackingMitigationBulkheadPost() {
             커널)에서는 어느 한 컴포넌트의 취약점만으로도 시스템 전체를 장악할 수 있다는 점을
             출발점으로 삼았습니다.
           </p>
-          <figure className="article-figure">
+          <figure className="article-figure article-figure--sm">
             <img src={asset("image1.png")} alt="BULKHEAD 문제 인식: 모놀리식 커널의 구조적 위험" />
           </figure>
           <p>
@@ -106,7 +106,7 @@ export default function SystemHackingMitigationBulkheadPost() {
             것이 아니라 커널 내부를 서로 신뢰하지 않는 컴포넌트로 나누자는 것입니다.
           </p>
           <p>BULKHEAD는 인텔 PKS를 이용해 커널을 컴포넌트로 나눕니다.</p>
-          <figure className="article-figure">
+          <figure className="article-figure article-figure--sm">
             <img src={asset("image2.png")} alt="Intel PKS 보호 키 개념" />
           </figure>
           <p>
@@ -114,7 +114,7 @@ export default function SystemHackingMitigationBulkheadPost() {
             레지스터로 어떤 키 영역에 읽고 쓸 수 있는지를 빠르게 전환할 수 있게 해 주는 하드웨어
             기능입니다.
           </p>
-          <figure className="article-figure">
+          <figure className="article-figure article-figure--sm">
             <img src={asset("image3.png")} alt="BULKHEAD 아키텍처 개요" />
           </figure>
           <p>
