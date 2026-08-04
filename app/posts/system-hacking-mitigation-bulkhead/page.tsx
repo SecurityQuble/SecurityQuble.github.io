@@ -44,6 +44,8 @@ export default function SystemHackingMitigationBulkheadPost() {
           </p>
           <p>가볍게 읽어주시면 감사하겠습니다!</p>
 
+          <hr />
+
           <h2>System Hacking and Mitigation</h2>
           <p>
             보안을 공부하시는 분들께서는 잘 아시다시피 해킹 기법과 mitigation은 서로 뚫고
@@ -187,6 +189,8 @@ export default function SystemHackingMitigationBulkheadPost() {
             구조를 나눌 수 있는가를 PKS로 실험해 본 연구해보고 제안해 본 mitigation 연구라고
             생각하시면 될 것 같습니다.
           </p>
+
+          <hr />
 
           <h2>마무리</h2>
           <p>
