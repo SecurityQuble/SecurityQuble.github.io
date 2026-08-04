@@ -24,7 +24,7 @@ export const members: Member[] = [
 export const posts: BlogPost[] = [
   {
     slug: "system-hacking-mitigation-bulkhead",
-    title: "System Hacking과 Mitigation, 그리고 BULKHEAD",
+    title: "System Mitigation - BULKHEAD",
     content:
       "해킹 기법과 mitigation의 공진화를 따라가며, NDSS 2025 BULKHEAD를 통해 PKS 기반 커널 컴포넌트 격리의 방향성을 살펴봅니다.",
     date: "2026-08-04",

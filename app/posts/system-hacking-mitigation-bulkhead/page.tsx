@@ -35,6 +35,7 @@ export default function SystemHackingMitigationBulkheadPost() {
         </header>
 
         <div className="article-content">
+          <h2>System Hacking and Mitigation</h2>
           <p>
             해킹 기법과 mitigation은 서로 뚫고 막으면서 계속 변화하고 성장해 왔습니다.
           </p>
