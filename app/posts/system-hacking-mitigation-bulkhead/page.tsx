@@ -192,6 +192,8 @@ export default function SystemHackingMitigationBulkheadPost() {
             구조를 나눌 수 있는가를 PKS로 실험해 본 연구해보고 제안해 본 mitigation 연구라고
             생각하시면 될 것 같습니다.
           </p>
+
+          <h2>마무리</h2>
           <p>
             최신 mitigation들이 어떤 방향으로 발전되고 연구되고 있는지에 대해 적어보고 싶어서
             찾아서 가져온 논문인데, 내용이 너무 딥해질 것 같아 오버헤드 등 실제 성능에 관한 실험
