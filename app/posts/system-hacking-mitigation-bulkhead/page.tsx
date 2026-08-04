@@ -39,10 +39,8 @@ export default function SystemHackingMitigationBulkheadPost() {
           <p>안녕하세요. rauzn입니다.</p>
           <p>
             블로그 첫 글을 쓰려니 어깨가 무거운데 시간이 많지않아 원하는 만큼 내용을 담지는
-            못했습니다.
-          </p>
-          <p>
-            오늘 주제는 Mitigation인데, 최근 관심을 가지게 된 쪽이어서 글로 적어보려고 합니다.
+            못했습니다. 오늘 주제는 최근 관심을 가지게 된 Mitigation에 대한 글을 적어보려고
+            합니다.
           </p>
           <p>가볍게 읽어주시면 감사하겠습니다!</p>
 
