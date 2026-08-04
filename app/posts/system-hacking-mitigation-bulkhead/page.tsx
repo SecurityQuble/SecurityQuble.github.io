@@ -35,9 +35,21 @@ export default function SystemHackingMitigationBulkheadPost() {
         </header>
 
         <div className="article-content">
+          <h2>들어가며</h2>
+          <p>안녕하세요. rauzn입니다.</p>
+          <p>
+            블로그 첫 글을 쓰려니 어깨가 무거운데 시간이 많지않아 원하는 만큼 내용을 담지는
+            못했습니다.
+          </p>
+          <p>
+            오늘 주제는 Mitigation인데, 최근 관심을 가지게 된 쪽이어서 글로 적어보려고 합니다.
+          </p>
+          <p>가볍게 읽어주시면 감사하겠습니다!</p>
+
           <h2>System Hacking and Mitigation</h2>
           <p>
-            해킹 기법과 mitigation은 서로 뚫고 막으면서 계속 변화하고 성장해 왔습니다.
+            보안을 공부하시는 분들께서는 잘 아시다시피 해킹 기법과 mitigation은 서로 뚫고
+            막으면서 계속 변화하고 성장해 왔습니다.
           </p>
           <p>
             시스템 해킹에서 대표적인 예로, 스택 버퍼 오버플로가 널리 쓰이자 이를 막기 위해
